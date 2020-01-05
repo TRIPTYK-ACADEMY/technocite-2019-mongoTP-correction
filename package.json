@@ -1,0 +1,15 @@
+{
+  "volta": {
+    "node": "12.14.0",
+    "yarn": "1.21.1"
+  },
+  "name": "technocite-2019-mongotp",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/TRIPTYK/technocite-2019-mongoTP.git",
+  "author": "gilles Bertrand <gilles@triptyk.eu>",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^5.8.1"
+  }
+}
