@@ -11,8 +11,8 @@ exports.list = async (request, response) => {
     let template = await fsp.readFile(`${process.cwd()}/views/index.html`, 'UTF-8')
     let html = '<ul>';
     let movies = await Movie.find({}).limit(100)
-        movies.forEach((movie)=>{
-            html += `<li>${movie.fields.title} : ${movie.fields.year} </li>`
+    movies.forEach((movie)=>{
+        html += `<li>${movie.fields.title} : ${movie.fields.year} </li>`
     })
     html+='</ul>'
     output = template.replace(/{{LIST}}/, html)

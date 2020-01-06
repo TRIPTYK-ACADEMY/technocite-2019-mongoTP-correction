@@ -3,12 +3,17 @@ const routes = [
 ];
 
 module.exports = async (request, response) => {
-    if (request.url === 'favicon.ico') response.end()
+    if (request.url === '/favicon.ico'){
+        response.end();
+    }
     let index = routes.findIndex((route) => route.url === request.url && route.method === request.method);
     let controller;
 
     if (index !== -1) {
         controller = require(`${process.cwd()}/controllers/${routes[index].controller}`)
+        controller[routes[index].action](request, response);
+    } else {
+        controller = require(`${process.cwd()}/controllers/error`);
+        controller['handleError'](request, response);
     }
-    controller[routes[index].action](request, response);
 }
