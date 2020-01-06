@@ -1,6 +1,7 @@
 const fsp = require('fs').promises;
 const Movie = require('../models/movie');
 const Helper = require('../helpers/index');
+const Moment = require('moment');
 /**
  * @param {*} request
  * @param {*} response
@@ -37,6 +38,23 @@ exports.read = async (request, response) => {
             fsp.readFile(`${process.cwd()}/views/error.html`)
         )
     }
-    console.log(movie)
-    response.end();
+    let output;
+
+    let details = `
+        <p>
+            <h2>${movie.fields.title} || Rating: ${movie.fields.rating}</h2>
+            Genres: ${movie.fields.genres.toString()}<br>
+            Resume: ${movie.fields.plot}<br>
+            <img src="${movie.fields.image_url.replace('http://', 'https://')}"><br>
+            Release date: ${Moment(movie.fields.release_date).format('DD-MM-YYYY')}<br>
+            Directors: ${movie.fields.directors.reduce((oldString, newString) => `${oldString.toUpperCase()} | ${newString.toUpperCase()}`)}<br>
+            Actors: ${movie.fields.actors.reduce((oldString, newString) => `${oldString.toUpperCase()} | ${newString.toUpperCase()}`)}<br>
+    `
+    if(movie.fields.running_time_secs){
+        details += `Time: ${Moment.duration(parseInt(movie.fields.running_time_secs)*1000).asMinutes()} minutes`
+    }
+    details += '</p>'
+    let template = await fsp.readFile(`${process.cwd()}/views/read.html`, 'UTF-8');
+    output = template.replace(/{{DETAILS}}/, details);
+    response.end(output);
 }
