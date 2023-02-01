@@ -10,6 +10,6 @@
   "author": "gilles Bertrand <gilles@triptyk.eu>",
   "license": "MIT",
   "dependencies": {
-    "mongoose": "^5.8.1"
+    "mongoose": "^5.13.15"
   }
 }
